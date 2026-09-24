@@ -1,0 +1,11 @@
+# ClassPal — ignore
+.write_ok
+.DS_Store
+*.iml
+.idea/
+.vscode/
+**/build/
+**/.gradle/
+**/node_modules/
+**/dist/
+**/.env.local

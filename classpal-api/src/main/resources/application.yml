@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: classpal-api
+  datasource:
+    url: "${DB_URL:jdbc:postgresql://localhost:5432/classpal?currentSchema=classpal}"
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        default_schema: classpal
+  flyway:
+    enabled: true
+    schemas: classpal
+    default-schema: classpal
+    create-schemas: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME:teste@gmail.com}
+    password: ${MAIL_PASSWORD:senha123}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+server:
+  port: 8080
+
+classpal:
+  cors:
+    allowed-origins: ${CORS_ORIGINS:http://localhost:5173}
+
+logging:
+  level:
+    com.classpal: INFO
