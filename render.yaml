@@ -1,0 +1,27 @@
+# Blueprint: Render Dashboard → New → Blueprint → este repo
+# Docs: https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: classpal-api
+    runtime: docker
+    plan: free
+    region: oregon
+    rootDir: classpal-api
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    envVars:
+      - key: DB_URL
+        sync: false
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: MAIL_USERNAME
+        sync: false
+      - key: MAIL_PASSWORD
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+      - key: JAVA_OPTS
+        value: "-XX:MaxRAMPercentage=70.0 -XX:+UseContainerSupport"

@@ -82,3 +82,37 @@ Abra http://localhost:5173
 cd classpal-api
 ./gradlew test
 ```
+
+## Deploy (Render + Docker)
+
+A API sobe com multi-stage Docker (`classpal-api/Dockerfile`). Blueprint opcional: `render.yaml` na raiz.
+
+1. Crie um Postgres (ex.: Neon) e monte `DB_URL` no formato JDBC com `sslmode=require` e `currentSchema=classpal`.
+2. No Render: **Web Service** → repo GitHub → **Docker**.
+   - Root Directory: `classpal-api`
+   - Ou use **Blueprint** apontando para `render.yaml`.
+3. Environment variables no painel:
+
+| Variável | Exemplo |
+|----------|---------|
+| `DB_URL` | `jdbc:postgresql://…/neondb?sslmode=require&currentSchema=classpal` |
+| `DB_USERNAME` | user do Neon |
+| `DB_PASSWORD` | senha |
+| `MAIL_USERNAME` | Gmail |
+| `MAIL_PASSWORD` | App Password |
+| `CORS_ORIGINS` | URL do front (Cloudflare Pages / Vercel), sem barra final |
+
+4. Health check: `GET /health` → `{"status":"ok"}`.
+5. Free tier hiberna após ociosidade; cold start é esperado.
+
+Build local (opcional):
+
+```bash
+cd classpal-api
+docker build -t classpal-api .
+docker run --rm -p 8080:8080 \
+  -e DB_URL=… -e DB_USERNAME=… -e DB_PASSWORD=… \
+  -e MAIL_USERNAME=… -e MAIL_PASSWORD=… \
+  -e CORS_ORIGINS=http://localhost:5173 \
+  classpal-api
+```

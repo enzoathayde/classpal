@@ -30,7 +30,8 @@ spring:
             enable: true
 
 server:
-  port: 8080
+  # Render (e outros PaaS) injetam PORT; local continua em 8080
+  port: ${PORT:8080}
 
 classpal:
   cors:
