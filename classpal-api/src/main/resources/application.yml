@@ -13,7 +13,7 @@ spring:
       hibernate:
         default_schema: classpal
   flyway:
-    enabled: true
+    enabled: ${FLYWAY_ENABLED:true}
     schemas: classpal
     default-schema: classpal
     create-schemas: true
