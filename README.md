@@ -2,12 +2,24 @@
 
 Controle de alunos e aulas disponíveis para professores.
 
+## Backend switch (front)
+
+In `classpal-web/.env.local`:
+
+| `VITE_API_BACKEND` | Uses |
+|--------------------|------|
+| `spring` (default) | Java API (`classpal-api` + Postgres) |
+| `sheets` | Google Sheets via Apps Script + local/Vercel proxy |
+
+Sheets setup (you already have secret + Web App URL): **[classpal-sheets-api/INSTRUCTIONS.md](./classpal-sheets-api/INSTRUCTIONS.md)**
+
 ## Estrutura
 
 | Peça | Pasta / schema | Porta |
 |------|----------------|-------|
 | Front | `classpal-web` | 5173 |
-| API (monólito) | `classpal-api` ↔ schema `classpal` | 8080 |
+| API Spring | `classpal-api` ↔ schema `classpal` | 8080 |
+| API Sheets | `classpal-sheets-api` (Apps Script) | — |
 
 ## Pré-requisitos
 

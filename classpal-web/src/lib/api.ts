@@ -1,5 +1,22 @@
-const USUARIOS_URL = import.meta.env.VITE_USUARIOS_URL ?? 'http://localhost:8080'
-const ALUNOS_URL = import.meta.env.VITE_ALUNOS_URL ?? 'http://localhost:8080'
+/**
+ * Backend switch:
+ *   VITE_API_BACKEND=spring  → Java/Spring Boot (default)
+ *   VITE_API_BACKEND=sheets  → Google Sheets via Apps Script proxy
+ */
+type ApiBackend = 'spring' | 'sheets'
+
+const API_BACKEND = (import.meta.env.VITE_API_BACKEND ?? 'spring').toLowerCase() as ApiBackend
+
+const SPRING_USUARIOS_URL = import.meta.env.VITE_USUARIOS_URL ?? 'http://localhost:8080'
+const SPRING_ALUNOS_URL = import.meta.env.VITE_ALUNOS_URL ?? 'http://localhost:8080'
+
+/** Sheets mode: empty = same origin `/api/*` (Vite proxy locally, Vercel in prod). */
+const SHEETS_API_URL = import.meta.env.VITE_SHEETS_API_URL ?? ''
+
+const USUARIOS_URL = API_BACKEND === 'sheets' ? SHEETS_API_URL : SPRING_USUARIOS_URL
+const ALUNOS_URL = API_BACKEND === 'sheets' ? SHEETS_API_URL : SPRING_ALUNOS_URL
+
+export const apiBackend: ApiBackend = API_BACKEND === 'sheets' ? 'sheets' : 'spring'
 
 export type Usuario = {
   id: number
